@@ -1,4 +1,4 @@
-# AnalystHelper & DocExplorer
+# FileExplorer - DocExplorer & AnalystHelper
 
 Outils d'analyse et de classification de documents pour ARGOS
 
@@ -69,7 +69,7 @@ print(f"Fichiers trouvés: {scanner.stats['total_files']}")
 ## 📁 Structure du Projet
 
 ```
-Intro/
+FileExplorer/
 ├── doc_explorer.py          # Interface DocExplorer (⭐ Nouveau)
 ├── analyst_helper/          # Package principal
 │   ├── core/               # Modules de base
