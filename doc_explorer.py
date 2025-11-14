@@ -1013,86 +1013,83 @@ class DocExplorerGUI:
 
                         # Extraire les PJ si activé
                         if enable_extract_pj:
-                            self.log(f"  Debut extraction PJ pour {new_name}")
-                            if not dest_path.exists():
-                                self.log(f"  ERREUR: Le fichier copie n'existe pas: {dest_path}")
-                            else:
-                                msg = None
-                                temp_dir = None
-                                try:
-                                    import extract_msg
-                                    msg = extract_msg.Message(str(dest_path))
-                                    temp_dir = dest_path.parent / ".temp_attachments"
-                                    temp_dir.mkdir(exist_ok=True)
+                            msg = None
+                            temp_dir = None
+                            try:
+                                import extract_msg
+                                self.log(f"  Extraction PJ: {new_name}")
+                                msg = extract_msg.Message(str(dest_path))
+                                temp_dir = dest_path.parent / ".temp_attachments"
+                                temp_dir.mkdir(exist_ok=True)
 
-                                    # Compter les PJ
-                                    num_attachments = len(msg.attachments) if msg.attachments else 0
-                                    if num_attachments > 0:
-                                        self.log(f"  -> {num_attachments} PJ trouvee(s) dans {new_name}")
+                                # Compter les PJ
+                                num_attachments = len(msg.attachments) if msg.attachments else 0
+                                if num_attachments > 0:
+                                    self.log(f"    -> {num_attachments} PJ trouvee(s)")
+                                else:
+                                    self.log(f"    -> Aucune PJ trouvee")
+
+                                for att in msg.attachments:
+                                    # Ignorer les images intégrées
+                                    filename = att.longFilename or att.shortFilename
+                                    if not filename:
+                                        continue
+
+                                    # Nettoyer le nom de fichier pour sécurité (éviter path traversal)
+                                    filename = os.path.basename(filename)
+                                    filename = "".join(c for c in filename if c.isalnum() or c in (' ', '.', '_', '-'))
+                                    if not filename:
+                                        filename = f"attachment_{id(att)}.dat"
+
+                                    # Sauvegarder la PJ
+                                    temp_path = temp_dir / filename
+                                    temp_path = self._get_unique_path(temp_path)
+
+                                    att.save(customPath=str(temp_dir), customFilename=temp_path.name)
+
+                                    # Classifier la PJ
+                                    if enable_classification:
+                                        pj_category = "Autres fichiers"  # Par défaut en mode classification
+                                        for cat, extensions in categories.items():
+                                            if temp_path.suffix.lower() in extensions:
+                                                pj_category = cat
+                                                break
                                     else:
-                                        self.log(f"  -> Aucune PJ dans {new_name}")
+                                        pj_category = "Donnees"  # Tout va dans "Données" si classification désactivée
 
-                                    for att in msg.attachments:
-                                        # Ignorer les images intégrées
-                                        filename = att.longFilename or att.shortFilename
-                                        if not filename:
-                                            continue
+                                    pj_dest = category_folders[pj_category] / temp_path.name
+                                    pj_dest = self._get_unique_path(pj_dest)
+                                    shutil.copy2(temp_path, pj_dest)
 
-                                        # Nettoyer le nom de fichier pour sécurité (éviter path traversal)
-                                        filename = os.path.basename(filename)
-                                        filename = "".join(c for c in filename if c.isalnum() or c in (' ', '.', '_', '-'))
-                                        if not filename:
-                                            filename = f"attachment_{id(att)}.dat"
+                                    self.log(f"       PJ extraite: {filename} -> {pj_category}")
 
-                                        # Sauvegarder la PJ
-                                        temp_path = temp_dir / filename
-                                        temp_path = self._get_unique_path(temp_path)
+                                    stats['total_attachments'] += 1
+                                    stats['total_files'] += 1
+                                    stats['by_category'][pj_category] += 1
 
-                                        att.save(customPath=str(temp_dir), customFilename=temp_path.name)
+                                    temp_path.unlink(missing_ok=True)
 
-                                        # Classifier la PJ
-                                        if enable_classification:
-                                            pj_category = "Autres fichiers"  # Par défaut en mode classification
-                                            for cat, extensions in categories.items():
-                                                if temp_path.suffix.lower() in extensions:
-                                                    pj_category = cat
-                                                    break
-                                        else:
-                                            pj_category = "Donnees"  # Tout va dans "Données" si classification désactivée
-
-                                        pj_dest = category_folders[pj_category] / temp_path.name
-                                        pj_dest = self._get_unique_path(pj_dest)
-                                        shutil.copy2(temp_path, pj_dest)
-
-                                        self.log(f"     PJ extraite: {filename} -> {pj_category}")
-
-                                        stats['total_attachments'] += 1
-                                        stats['total_files'] += 1
-                                        stats['by_category'][pj_category] += 1
-
-                                        temp_path.unlink(missing_ok=True)
-
-                                except ImportError as e:
-                                    self.log(f"ERREUR: Module extract_msg non installe - {e}")
-                                    self.log(f"  Installez avec: pip install extract-msg")
-                                except Exception as e:
-                                    import traceback
-                                    self.log(f"ERREUR extraction PJ de {new_name}: {e}")
-                                    self.log(f"  Details: {traceback.format_exc()}")
-                                finally:
-                                    # Garantir la fermeture du message
-                                    if msg:
-                                        try:
-                                            msg.close()
-                                        except:
-                                            pass
-                                    # Nettoyer le dossier temp
-                                    if temp_dir and temp_dir.exists():
-                                        try:
-                                            if not any(temp_dir.iterdir()):
-                                                temp_dir.rmdir()
-                                        except:
-                                            pass
+                            except ImportError as e:
+                                self.log(f"ERREUR: Module extract_msg non installe - {e}")
+                                self.log(f"  Installez avec: pip install extract-msg")
+                            except Exception as e:
+                                import traceback
+                                self.log(f"ERREUR extraction PJ de {new_name}: {e}")
+                                self.log(f"  Traceback: {traceback.format_exc()}")
+                            finally:
+                                # Garantir la fermeture du message
+                                if msg:
+                                    try:
+                                        msg.close()
+                                    except:
+                                        pass
+                                # Nettoyer le dossier temp
+                                if temp_dir and temp_dir.exists():
+                                    try:
+                                        if not any(temp_dir.iterdir()):
+                                            temp_dir.rmdir()
+                                    except:
+                                        pass
 
                     else:
                         # Fichier normal
