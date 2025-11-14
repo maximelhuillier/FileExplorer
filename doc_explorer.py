@@ -846,6 +846,8 @@ class DocExplorerGUI:
             }
 
             # Charger l'historique des fichiers déjà traités
+            files_already_in_output = False  # Flag pour savoir si les fichiers sont déjà dans output
+
             if trace_file.exists() and not self.force_reprocess.get():
                 try:
                     with open(trace_file, 'r', encoding='utf-8') as f:
@@ -856,6 +858,12 @@ class DocExplorerGUI:
                             last_execution = history['executions'][-1]
                             last_features = last_execution.get('features', {})
 
+                            # Vérifier si scan_recursif ou classification ont déjà été effectués
+                            files_already_copied = (
+                                last_features.get('scan_recursif') or
+                                last_features.get('classification')
+                            )
+
                             # Comparer les fonctionnalités importantes
                             config_changed = (
                                 last_features.get('scan_recursif') != current_config['scan_recursif'] or
@@ -865,7 +873,19 @@ class DocExplorerGUI:
                             )
 
                             if config_changed:
-                                self.log("Configuration changee - Retraitement de tous les fichiers")
+                                # Si seul renommage ou extraction_pj ont changé, les fichiers sont déjà dans output
+                                only_processing_changed = (
+                                    last_features.get('scan_recursif') == current_config['scan_recursif'] and
+                                    last_features.get('classification') == current_config['classification'] and
+                                    (last_features.get('renommage_emails') != current_config['renommage_emails'] or
+                                     last_features.get('extraction_pj') != current_config['extraction_pj'])
+                                )
+
+                                if only_processing_changed and files_already_copied:
+                                    files_already_in_output = True
+                                    self.log("Fichiers deja dans output - Traitement direct des fichiers de sortie")
+                                else:
+                                    self.log("Configuration changee - Retraitement de tous les fichiers")
                             else:
                                 # Configuration identique : charger les fichiers traités
                                 for execution in history.get('executions', []):
@@ -935,11 +955,20 @@ class DocExplorerGUI:
                 self.log("TRAITEMENT DES FICHIERS")
                 self.log("=" * 70)
 
-                # Scanner les fichiers
-                if recursive:
-                    files_to_process = list(input_folder.rglob('*'))
+                # Scanner les fichiers : soit depuis input_folder, soit depuis output_folder
+                if files_already_in_output:
+                    # Les fichiers sont déjà dans output, on les traite sur place
+                    self.log("Mode: Traitement des fichiers deja dans le dossier de sortie")
+                    files_to_process = []
+                    for cat_folder in category_folders.values():
+                        if cat_folder.exists():
+                            files_to_process.extend(list(cat_folder.rglob('*')))
                 else:
-                    files_to_process = list(input_folder.glob('*'))
+                    # Scanner depuis input_folder comme d'habitude
+                    if recursive:
+                        files_to_process = list(input_folder.rglob('*'))
+                    else:
+                        files_to_process = list(input_folder.glob('*'))
 
                 total_files_count = len([f for f in files_to_process if f.is_file()])
                 self.log(f"Fichiers a traiter : {total_files_count}\n")
@@ -989,27 +1018,45 @@ class DocExplorerGUI:
                         stats['total_emails'] += 1
                         self.log(f"Traitement email: {file_path.name}")
 
-                        # Renommer si activé
-                        if enable_rename:
-                            try:
-                                from analyst_helper import EmailRenamer
-                                renamer = EmailRenamer()
-                                new_name, _ = renamer.rename_msg_file(str(file_path))
-                                # Log uniquement si erreur (pas pour chaque email)
-                            except Exception as e:
-                                new_name = file_path.name
-                                self.log(f"ERREUR renommage {file_path.name}")
+                        if files_already_in_output:
+                            # Les fichiers sont déjà dans output, on travaille sur place
+                            dest_path = file_path
+
+                            # Renommer sur place si activé
+                            if enable_rename:
+                                try:
+                                    from analyst_helper import EmailRenamer
+                                    renamer = EmailRenamer()
+                                    new_name, _ = renamer.rename_msg_file(str(file_path))
+                                    new_dest_path = file_path.parent / new_name
+                                    new_dest_path = self._get_unique_path(new_dest_path)
+                                    if new_dest_path != file_path:
+                                        file_path.rename(new_dest_path)
+                                        dest_path = new_dest_path
+                                except Exception as e:
+                                    self.log(f"ERREUR renommage {file_path.name}")
                         else:
-                            new_name = file_path.name
+                            # Mode normal : copier depuis source vers output
+                            # Renommer si activé
+                            if enable_rename:
+                                try:
+                                    from analyst_helper import EmailRenamer
+                                    renamer = EmailRenamer()
+                                    new_name, _ = renamer.rename_msg_file(str(file_path))
+                                except Exception as e:
+                                    new_name = file_path.name
+                                    self.log(f"ERREUR renommage {file_path.name}")
+                            else:
+                                new_name = file_path.name
 
-                        # Copier l'email
-                        dest_folder = category_folders[category]
-                        dest_path = dest_folder / new_name
-                        dest_path = self._get_unique_path(dest_path)
-                        shutil.copy2(file_path, dest_path)
+                            # Copier l'email
+                            dest_folder = category_folders[category]
+                            dest_path = dest_folder / new_name
+                            dest_path = self._get_unique_path(dest_path)
+                            shutil.copy2(file_path, dest_path)
 
-                        stats['total_files'] += 1
-                        stats['by_category'][category] += 1
+                            stats['total_files'] += 1
+                            stats['by_category'][category] += 1
 
                         # Extraire les PJ si activé
                         if enable_extract_pj:
