@@ -1,6 +1,6 @@
 # FileExplorer - DocExplorer & AnalystHelper
 
-Outils d'analyse et de classification de documents pour ARGOS
+Outils d'analyse et de classification de documents 
 
 ## 🎯 Projets Disponibles
 
@@ -120,7 +120,7 @@ DocExplorer v2 inclut:
 - ✅ Throttling UI pour performances
 - ✅ Arrêt propre des threads
 
-**Score de robustesse:** 8.5/10 (voir [_archives/AUDIT_ROBUSTESSE.md](_archives/AUDIT_ROBUSTESSE.md))
+
 
 ## 📊 Historique des Traitements
 
@@ -180,7 +180,7 @@ Voir [LICENSE](LICENSE)
 
 ## 👤 Auteur
 
-Maxime Lhuillier - ARGOS
+Maxime Lhuillier 
 
 ## 🔗 Liens Utiles
 
