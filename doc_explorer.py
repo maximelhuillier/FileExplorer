@@ -149,6 +149,9 @@ class DocExplorerGUI:
             'arborescence': tk.BooleanVar(value=True),
         }
 
+        # Option pour forcer le retraitement
+        self.force_reprocess = tk.BooleanVar(value=False)
+
         # Charger l'icône
         self.load_logo_icon()
 
@@ -439,6 +442,44 @@ class DocExplorerGUI:
                 fg=self.colors['text_light'],
                 anchor='w'
             ).pack(fill='x')
+
+        # Séparateur
+        tk.Frame(card2, bg=self.colors['border'], height=1).pack(fill='x', pady=10)
+
+        # Option forcer retraitement
+        force_frame = tk.Frame(card2, bg=self.colors['card'])
+        force_frame.pack(fill='x', pady=5)
+
+        self.force_cb = tk.Checkbutton(
+            force_frame,
+            variable=self.force_reprocess,
+            bg=self.colors['card'],
+            activebackground=self.colors['card'],
+            highlightthickness=0,
+            bd=0
+        )
+        self.force_cb.pack(side='left', padx=(0, 5))
+
+        force_text_frame = tk.Frame(force_frame, bg=self.colors['card'])
+        force_text_frame.pack(side='left', fill='x', expand=True)
+
+        tk.Label(
+            force_text_frame,
+            text="Forcer le retraitement",
+            font=('Segoe UI', 10, 'bold'),
+            bg=self.colors['card'],
+            fg=self.colors['danger'],
+            anchor='w'
+        ).pack(fill='x')
+
+        tk.Label(
+            force_text_frame,
+            text="Ignorer l'historique et retraiter tous les fichiers",
+            font=('Segoe UI', 9),
+            bg=self.colors['card'],
+            fg=self.colors['text_light'],
+            anchor='w'
+        ).pack(fill='x')
 
         # ===== CARD 2b : Dossier de sortie =====
         card2b_shadow, card2b = self.create_rounded_frame(content_frame)
@@ -796,18 +837,47 @@ class DocExplorerGUI:
             trace_file = output_folder / ".docexplorer_history.json"
             processed_files_set = set()
 
+            # Préparer la configuration actuelle pour comparaison
+            current_config = {
+                'scan_recursif': self.feature_vars['scan_recursif'].get(),
+                'renommage_emails': self.feature_vars['renommage_emails'].get(),
+                'extraction_pj': self.feature_vars['extraction_pj'].get(),
+                'classification': self.feature_vars['classification'].get(),
+            }
+
             # Charger l'historique des fichiers déjà traités
-            if trace_file.exists():
+            if trace_file.exists() and not self.force_reprocess.get():
                 try:
                     with open(trace_file, 'r', encoding='utf-8') as f:
                         history = json.load(f)
-                        # Récupérer tous les fichiers déjà traités
-                        for execution in history.get('executions', []):
-                            processed_files_set.update(execution.get('processed_files', []))
-                        self.log(f"Historique charge : {len(processed_files_set)} fichiers deja traites")
+
+                        # Ne charger les fichiers traités QUE si la config est identique à la dernière exécution
+                        if history.get('executions'):
+                            last_execution = history['executions'][-1]
+                            last_features = last_execution.get('features', {})
+
+                            # Comparer les fonctionnalités importantes
+                            config_changed = (
+                                last_features.get('scan_recursif') != current_config['scan_recursif'] or
+                                last_features.get('renommage_emails') != current_config['renommage_emails'] or
+                                last_features.get('extraction_pj') != current_config['extraction_pj'] or
+                                last_features.get('classification') != current_config['classification']
+                            )
+
+                            if config_changed:
+                                self.log("Configuration changee - Retraitement de tous les fichiers")
+                            else:
+                                # Configuration identique : charger les fichiers traités
+                                for execution in history.get('executions', []):
+                                    processed_files_set.update(execution.get('processed_files', []))
+                                self.log(f"Historique charge : {len(processed_files_set)} fichiers deja traites")
+
                 except Exception as e:
                     self.log(f"Impossible de charger l'historique : {e}")
                     history = {'executions': []}
+            elif self.force_reprocess.get():
+                self.log("Retraitement force - Tous les fichiers seront traites")
+                history = {'executions': []}
             else:
                 history = {'executions': []}
 
