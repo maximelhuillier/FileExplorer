@@ -1023,26 +1023,52 @@ class TreeGenerator:
         }});
 
         // Contrôles zoom
-        let currentScale = 1;
-
         function zoomIn() {{
-            // Simuler la souris au centre de l'écran
-            const container = svg.node().getBoundingClientRect();
-            const center = [container.width / 2, container.height / 2];
+            // Récupérer la transformation actuelle
+            const currentTransform = d3.zoomTransform(svg.node());
 
+            // Point central du viewport
+            const containerRect = svg.node().getBoundingClientRect();
+            const centerX = containerRect.width / 2;
+            const centerY = containerRect.height / 2;
+
+            // Calculer le nouveau scale
+            const newScale = currentTransform.k * 1.3;
+
+            // Calculer la nouvelle translation pour garder le centre fixe
+            const newTranslateX = centerX - (centerX - currentTransform.x) * (newScale / currentTransform.k);
+            const newTranslateY = centerY - (centerY - currentTransform.y) * (newScale / currentTransform.k);
+
+            // Appliquer la transformation
             svg.transition()
                 .duration(300)
-                .call(zoom.scaleBy, 1.3, center);
+                .call(zoom.transform, d3.zoomIdentity
+                    .translate(newTranslateX, newTranslateY)
+                    .scale(newScale));
         }}
 
         function zoomOut() {{
-            // Simuler la souris au centre de l'écran
-            const container = svg.node().getBoundingClientRect();
-            const center = [container.width / 2, container.height / 2];
+            // Récupérer la transformation actuelle
+            const currentTransform = d3.zoomTransform(svg.node());
 
+            // Point central du viewport
+            const containerRect = svg.node().getBoundingClientRect();
+            const centerX = containerRect.width / 2;
+            const centerY = containerRect.height / 2;
+
+            // Calculer le nouveau scale
+            const newScale = currentTransform.k * 0.77;
+
+            // Calculer la nouvelle translation pour garder le centre fixe
+            const newTranslateX = centerX - (centerX - currentTransform.x) * (newScale / currentTransform.k);
+            const newTranslateY = centerY - (centerY - currentTransform.y) * (newScale / currentTransform.k);
+
+            // Appliquer la transformation
             svg.transition()
                 .duration(300)
-                .call(zoom.scaleBy, 0.77, center);
+                .call(zoom.transform, d3.zoomIdentity
+                    .translate(newTranslateX, newTranslateY)
+                    .scale(newScale));
         }}
 
         function resetZoom() {{
@@ -1134,6 +1160,15 @@ class TreeGenerator:
         // Variable pour suivre le niveau de dépliage actuel
         let currentDepthLevel = 100; // Par défaut tout déplié
 
+        // Calculer la profondeur maximale de l'arbre
+        function getMaxDepth() {{
+            let maxDepth = 0;
+            root.descendants().forEach(d => {{
+                if (d.depth > maxDepth) maxDepth = d.depth;
+            }});
+            return maxDepth;
+        }}
+
         // Déplier jusqu'à un niveau
         function expandToLevel(maxLevel) {{
             currentDepthLevel = maxLevel;
@@ -1155,8 +1190,11 @@ class TreeGenerator:
 
         // Augmenter le niveau de dépliage
         function increaseDepth() {{
-            currentDepthLevel++;
-            expandToLevel(currentDepthLevel);
+            const maxDepth = getMaxDepth();
+            if (currentDepthLevel < maxDepth + 1) {{
+                currentDepthLevel++;
+                expandToLevel(currentDepthLevel);
+            }}
         }}
 
         // Diminuer le niveau de dépliage
