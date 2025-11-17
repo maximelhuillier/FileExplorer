@@ -585,10 +585,10 @@ class TreeGenerator:
             </div>
         </div>
         <div class="action-buttons">
-            <button class="action-btn" onclick="collapseAll()">➖ Tout Replier</button>
-            <button class="action-btn" onclick="expandAll()">➕ Tout Déplier</button>
-            <button class="action-btn" onclick="decreaseDepth()">➖ Niveau</button>
-            <button class="action-btn" onclick="increaseDepth()">➕ Niveau</button>
+            <button class="action-btn" onclick="decreaseDepth()">➖</button>
+            <button class="action-btn" onclick="increaseDepth()">➕</button>
+            <button class="action-btn" onclick="collapseAll()">Tout Replier</button>
+            <button class="action-btn" onclick="expandAll()">Tout Déplier</button>
             <button class="action-btn" onclick="toggleFilters()">🎯 Filtres</button>
             <button class="action-btn" onclick="exportToHTML()">📥 Exporter</button>
             <button class="action-btn" onclick="resetView()">🔄 Réinitialiser</button>
@@ -1026,25 +1026,23 @@ class TreeGenerator:
         let currentScale = 1;
 
         function zoomIn() {{
-            // Zoomer sur le centre de la fenêtre
-            const svgRect = svg.node().getBoundingClientRect();
-            const centerX = svgRect.width / 2;
-            const centerY = svgRect.height / 2;
+            // Simuler la souris au centre de l'écran
+            const container = svg.node().getBoundingClientRect();
+            const center = [container.width / 2, container.height / 2];
 
             svg.transition()
                 .duration(300)
-                .call(zoom.scaleBy, 1.3, [centerX, centerY]);
+                .call(zoom.scaleBy, 1.3, center);
         }}
 
         function zoomOut() {{
-            // Dézoomer sur le centre de la fenêtre
-            const svgRect = svg.node().getBoundingClientRect();
-            const centerX = svgRect.width / 2;
-            const centerY = svgRect.height / 2;
+            // Simuler la souris au centre de l'écran
+            const container = svg.node().getBoundingClientRect();
+            const center = [container.width / 2, container.height / 2];
 
             svg.transition()
                 .duration(300)
-                .call(zoom.scaleBy, 0.77, [centerX, centerY]);
+                .call(zoom.scaleBy, 0.77, center);
         }}
 
         function resetZoom() {{
