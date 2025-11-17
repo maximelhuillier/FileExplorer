@@ -229,130 +229,189 @@ class TreeGenerator:
         }}
 
         body {{
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #e8eaf0;
             overflow: hidden;
             height: 100vh;
         }}
 
         .header {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 30px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }}
-
-        .header h1 {{
-            font-size: 24px;
-            margin-bottom: 5px;
-        }}
-
-        .header p {{
-            opacity: 0.9;
-            font-size: 12px;
-        }}
-
-        .controls {{
-            background: #f8f9fa;
-            padding: 15px 30px;
+            background: #ffffff;
+            border-bottom: 2px solid #c5cae0;
+            padding: 14px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }}
+
+        .header-title {{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+
+        .header h1 {{
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a0d1a;
+        }}
+
+        .header-info {{
+            font-size: 12px;
+            color: #4a5568;
+            font-weight: 500;
+        }}
+
+        .controls {{
+            background: #f7f8fc;
+            border-bottom: 2px solid #d1d5e0;
+            padding: 12px 28px;
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }}
 
         .search-box {{
             flex: 1;
-            max-width: 400px;
+            max-width: 320px;
             position: relative;
         }}
 
         .search-box input {{
             width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 2px solid #667eea;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 8px 36px 8px 12px;
+            border: 2px solid #c5cae0;
+            border-radius: 6px;
+            font-size: 13px;
             outline: none;
-            transition: all 0.3s;
+            transition: border-color 0.2s;
+            background: white;
+            font-weight: 500;
         }}
 
         .search-box input:focus {{
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+            border-color: #5568d3;
+            box-shadow: 0 0 0 3px rgba(85,104,211,0.1);
         }}
 
         .search-icon {{
             position: absolute;
-            right: 15px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #667eea;
+            color: #6b7280;
+            font-size: 15px;
         }}
 
         .stats {{
             display: flex;
             gap: 20px;
-            align-items: center;
+            margin-left: auto;
         }}
 
         .stat-item {{
-            background: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
-            min-width: 100px;
+            padding: 0 16px;
+            border-right: 2px solid #d1d5e0;
+        }}
+
+        .stat-item:last-child {{
+            border-right: none;
         }}
 
         .stat-value {{
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a0d1a;
             display: block;
         }}
 
         .stat-label {{
-            font-size: 11px;
-            color: #6c757d;
-            margin-top: 5px;
-            display: block;
+            font-size: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+            margin-top: 2px;
         }}
 
         .action-buttons {{
             display: flex;
-            gap: 10px;
+            gap: 8px;
+        }}
+
+        .btn-group {{
+            display: flex;
+            gap: 0;
+            border: 2px solid #c5cae0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: white;
         }}
 
         .action-btn {{
-            background: #667eea;
-            color: white;
+            background: white;
+            color: #1a202c;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 8px 14px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }}
+
+        .btn-group .action-btn {{
+            border-radius: 0;
+            border-right: 2px solid #c5cae0;
+        }}
+
+        .btn-group .action-btn:last-child {{
+            border-right: none;
         }}
 
         .action-btn:hover {{
+            background: #e8eaf0;
+        }}
+
+        .action-btn.primary {{
             background: #5568d3;
+            color: white;
+            border: 2px solid #5568d3;
+            border-radius: 6px;
+        }}
+
+        .action-btn.primary:hover {{
+            background: #4556b8;
+            border-color: #4556b8;
+        }}
+
+        .action-btn.filters {{
+            background: white;
+            color: #1a202c;
+            border: 2px solid #c5cae0;
+            border-radius: 6px;
+        }}
+
+        .action-btn.filters:hover {{
+            background: #e8eaf0;
         }}
 
         .filters-panel {{
-            background: #f8f9fa;
-            padding: 15px 30px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-top: 1px solid #e0e0e0;
+            background: #f0f2f8;
+            padding: 14px 28px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 2px solid #c5cae0;
             display: none;
         }}
 
         .filters-container {{
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
         }}
 
@@ -362,38 +421,127 @@ class TreeGenerator:
             gap: 8px;
             font-size: 13px;
             cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 6px;
             background: white;
             transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 2px solid #c5cae0;
+            font-weight: 600;
         }}
 
         .filter-item:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
         }}
 
         .filter-item.inactive {{
-            opacity: 0.3;
-            background: #f5f5f5;
+            opacity: 0.4;
+            background: #e8eaf0;
+            border-color: #d1d5e0;
         }}
 
         .filter-color {{
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            border: 2px solid rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }}
-
-        .filter-item:hover .filter-color {{
-            transform: scale(1.2);
+            border: 2px solid rgba(0,0,0,0.3);
         }}
 
         .filter-label {{
+            font-weight: 600;
+            color: #1a202c;
+        }}
+
+        #tree-container {{
+            width: 100%;
+            height: calc(100vh - 116px);
+            background: #ffffff;
+            overflow: hidden;
+            position: relative;
+            border-top: 1px solid #e8eaf0;
+        }}
+
+        .node circle {{
+            cursor: pointer;
+            stroke-width: 2px;
+            transition: r 0.2s, stroke-width 0.2s;
+        }}
+
+        .node:hover circle {{
+            stroke-width: 3px;
+        }}
+
+        .node text {{
+            font-size: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            fill: #0a0d1a;
+            pointer-events: none;
             font-weight: 500;
-            color: #2c3e50;
+        }}
+
+        .link {{
+            fill: none;
+            stroke: #b0b5c8;
+            stroke-width: 1.5px;
+            opacity: 0.7;
+        }}
+
+        .tooltip {{
+            position: absolute;
+            background: rgba(10,13,26,0.92);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            max-width: 320px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }}
+
+        .highlight {{
+            stroke: #5568d3 !important;
+            stroke-width: 4px !important;
+        }}
+
+        .zoom-controls {{
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: white;
+            border: 2px solid #c5cae0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }}
+
+        .zoom-btn {{
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: white;
+            color: #1a202c;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid #c5cae0;
+        }}
+
+        .zoom-btn:last-child {{
+            border-bottom: none;
+        }}
+
+        .zoom-btn:hover {{
+            background: #e8eaf0;
         }}
 
         .file-detail-modal {{
@@ -411,44 +559,48 @@ class TreeGenerator:
 
         .file-detail-content {{
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 600px;
+            border-radius: 12px;
+            padding: 28px;
+            max-width: 540px;
             width: 90%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            border: 2px solid #c5cae0;
         }}
 
         .file-detail-content h2 {{
-            margin: 0 0 20px 0;
-            color: #667eea;
-            font-size: 20px;
+            margin: 0 0 18px 0;
+            color: #0a0d1a;
+            font-size: 18px;
+            font-weight: 700;
             word-break: break-all;
         }}
 
         .file-detail-info {{
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 14px;
+            margin-bottom: 22px;
         }}
 
         .file-detail-info div {{
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
         }}
 
         .file-detail-info strong {{
-            color: #667eea;
-            font-size: 12px;
-            font-weight: 600;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }}
 
         .file-detail-info span {{
-            color: #2c3e50;
+            color: #0a0d1a;
             word-break: break-all;
-            white-space: pre-wrap;
             font-size: 13px;
+            font-weight: 500;
         }}
 
         .modal-buttons {{
@@ -459,117 +611,63 @@ class TreeGenerator:
         .close-modal, .open-file-btn {{
             flex: 1;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 11px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s;
+            font-weight: 600;
+            transition: background 0.15s;
         }}
 
         .close-modal {{
-            background: #6c757d;
-            color: white;
+            background: #e8eaf0;
+            color: #1a202c;
+            border: 2px solid #c5cae0;
         }}
 
         .close-modal:hover {{
-            background: #5a6268;
+            background: #d1d5e0;
         }}
 
         .open-file-btn {{
-            background: #667eea;
+            background: #5568d3;
             color: white;
+            border: 2px solid #5568d3;
         }}
 
         .open-file-btn:hover {{
-            background: #5568d3;
-        }}
-
-        #tree-container {{
-            width: 100%;
-            height: calc(100vh - 160px);
-            background: white;
-            overflow: auto;
-        }}
-
-        .node circle {{
-            cursor: pointer;
-            stroke-width: 2px;
-        }}
-
-        .node text {{
-            font-size: 13px;
-            font-family: 'Segoe UI', sans-serif;
-            fill: #2c3e50;
-        }}
-
-        .link {{
-            fill: none;
-            stroke: #ddd;
-            stroke-width: 1.5px;
-            opacity: 0.4;
-            z-index: -1;
-        }}
-
-        .tooltip {{
-            position: absolute;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-size: 12px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1000;
-        }}
-
-        .highlight {{
-            stroke: #f39c12 !important;
-            stroke-width: 4px !important;
-        }}
-
-        .zoom-controls {{
-            position: fixed;
-            top: 180px;
-            right: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            padding: 5px;
-            z-index: 100;
-        }}
-
-        .zoom-btn {{
-            display: block;
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: #667eea;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            margin: 5px;
-            border-radius: 5px;
-            transition: background 0.2s;
-        }}
-
-        .zoom-btn:hover {{
-            background: #5568d3;
+            background: #4556b8;
         }}
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📁 Arborescence - {folder.name}</h1>
-        <p>{folder} - Généré le {datetime.now().strftime('%d/%m/%Y à %H:%M:%S')}</p>
+        <div class="header-title">
+            <h1>{folder.name}</h1>
+            <span class="header-info">• {datetime.now().strftime('%d/%m/%Y %H:%M')}</span>
+        </div>
     </div>
 
     <div class="controls">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Rechercher un fichier ou dossier...">
-            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Rechercher...">
+            <span class="search-icon">⌕</span>
         </div>
+
+        <div class="btn-group">
+            <button class="action-btn" onclick="decreaseDepth()" title="Réduire la profondeur">−</button>
+            <button class="action-btn" onclick="increaseDepth()" title="Augmenter la profondeur">+</button>
+        </div>
+
+        <div class="btn-group">
+            <button class="action-btn" onclick="collapseAll()">Replier</button>
+            <button class="action-btn" onclick="expandAll()">Déplier</button>
+        </div>
+
+        <button class="action-btn filters" onclick="toggleFilters()">🎯 Filtres</button>
+        <button class="action-btn" onclick="exportToHTML()">📥 Export</button>
+        <button class="action-btn primary" onclick="resetView()">Réinitialiser</button>
+
         <div class="stats">
             <div class="stat-item">
                 <span class="stat-value">{self.stats['total_files']}</span>
@@ -581,22 +679,12 @@ class TreeGenerator:
             </div>
             <div class="stat-item">
                 <span class="stat-value">{self.stats['total_size_mb']:.1f} MB</span>
-                <span class="stat-label">Taille totale</span>
+                <span class="stat-label">Taille</span>
             </div>
-        </div>
-        <div class="action-buttons">
-            <button class="action-btn" onclick="decreaseDepth()">➖</button>
-            <button class="action-btn" onclick="increaseDepth()">➕</button>
-            <button class="action-btn" onclick="collapseAll()">Tout Replier</button>
-            <button class="action-btn" onclick="expandAll()">Tout Déplier</button>
-            <button class="action-btn" onclick="toggleFilters()">🎯 Filtres</button>
-            <button class="action-btn" onclick="exportToHTML()">📥 Exporter</button>
-            <button class="action-btn" onclick="resetView()">🔄 Réinitialiser</button>
         </div>
     </div>
 
-    <!-- Panneau de filtres dépliable -->
-    <div class="filters-panel" id="filtersPanel" style="display: none;">
+    <div class="filters-panel" id="filtersPanel">
         <div class="filters-container">
             <div class="filter-item active" data-filter="folder" onclick="toggleFilter('folder', this)">
                 <div class="filter-color" style="background: #667eea;"></div>
@@ -636,38 +724,37 @@ class TreeGenerator:
     <div id="tree-container"></div>
 
     <div class="zoom-controls">
-        <button class="zoom-btn" onclick="zoomIn()">+</button>
-        <button class="zoom-btn" onclick="resetZoom()">⟲</button>
-        <button class="zoom-btn" onclick="zoomOut()">−</button>
+        <button class="zoom-btn" onclick="zoomIn()" title="Zoom avant">+</button>
+        <button class="zoom-btn" onclick="resetZoom()" title="Réinitialiser le zoom">⟲</button>
+        <button class="zoom-btn" onclick="zoomOut()" title="Zoom arrière">−</button>
     </div>
 
     <div class="tooltip" id="tooltip"></div>
 
-    <!-- Modal pour afficher les détails du fichier -->
     <div class="file-detail-modal" id="fileDetailModal" onclick="closeModal()">
         <div class="file-detail-content" onclick="event.stopPropagation()">
             <h2 id="modalFileName"></h2>
             <div class="file-detail-info">
                 <div>
-                    <strong>Type:</strong>
+                    <strong>Type</strong>
                     <span id="modalFileType"></span>
                 </div>
                 <div>
-                    <strong>Taille:</strong>
+                    <strong>Taille</strong>
                     <span id="modalFileSize"></span>
                 </div>
                 <div>
-                    <strong>Date:</strong>
+                    <strong>Date de modification</strong>
                     <span id="modalFileDate"></span>
                 </div>
                 <div>
-                    <strong>Chemin:</strong>
+                    <strong>Chemin</strong>
                     <span id="modalFilePath"></span>
                 </div>
             </div>
             <div class="modal-buttons">
-                <button class="open-file-btn" onclick="openFile()">📂 Ouvrir</button>
                 <button class="close-modal" onclick="closeModal()">Fermer</button>
+                <button class="open-file-btn" onclick="openFile()">Ouvrir le fichier</button>
             </div>
         </div>
     </div>
@@ -675,38 +762,72 @@ class TreeGenerator:
     <script>
         const treeData = {tree_json};
 
-        // Configuration - ARBRE HORIZONTAL avec espacements optimisés
-        const margin = {{top: 50, right: 150, bottom: 50, left: 150}};
-        const width = Math.max(3000, window.innerWidth * 2);  // Plus large
-        const height = Math.max(2000, window.innerHeight * 2);
+        // Configuration - Espacement réduit
+        const margin = {{top: 20, right: 200, bottom: 20, left: 100}};
+        const width = 5000;
+        const height = 3000;
 
-        // Créer le SVG
-        const svg = d3.select("#tree-container")
+        const container = d3.select("#tree-container");
+
+        const svg = container
             .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom);
+            .attr("width", width)
+            .attr("height", height);
 
         const g = svg.append("g")
             .attr("transform", `translate(${{margin.left}},${{margin.top}})`);
 
-        // Zoom
+        // Zoom avec filtre pour Ctrl+Scroll
         const zoom = d3.zoom()
-            .scaleExtent([0.1, 3])
+            .scaleExtent([0.1, 4])
+            .filter((event) => {{
+                // Bloquer le zoom par défaut si Ctrl est pressé (pour gérer le scroll vertical)
+                if (event.type === 'wheel' && event.ctrlKey) {{
+                    return false;
+                }}
+                return true;
+            }})
             .on("zoom", (event) => {{
                 g.attr("transform", event.transform);
             }});
 
         svg.call(zoom);
 
-        // Créer la hiérarchie - ARBRE HORIZONTAL
+        // Ctrl+Scroll pour défilement vertical
+        svg.on('wheel', function(event) {{
+            if (event.ctrlKey) {{
+                event.preventDefault();
+                event.stopPropagation();
+
+                const transform = d3.zoomTransform(svg.node());
+                const delta = event.deltaY * 1.5; // Vitesse de défilement
+
+                // Déplacer verticalement
+                svg.transition()
+                    .duration(100)
+                    .call(zoom.transform, d3.zoomIdentity
+                        .translate(transform.x, transform.y - delta)
+                        .scale(transform.k));
+            }}
+        }}, {{ passive: false }});
+
+        // Hiérarchie
         const root = d3.hierarchy(treeData);
 
-        // Tout déplier par défaut (aucun nœud caché)
-        // Pas de cache initial des enfants
+        // Initialiser _children pour permettre le contrôle de profondeur
+        // mais garder tout déplié au départ (children n'est pas null)
+        root.descendants().forEach(d => {{
+            if (d.children && d.children.length > 0) {{
+                d._children = d.children; // Sauvegarder une référence
+            }}
+        }});
 
         const treeLayout = d3.tree()
-            .size([height, width - 400])
-            .nodeSize([30, 450]);  // Vertical: 30px, Horizontal: 450px (encore plus d'espace)
+            .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
+            .nodeSize([15, 450]); // Espacement: 15px vertical, 450px horizontal - très compact
+
+        let currentFilePath = null;
+        let currentDepthLevel = 999; // Max par défaut
 
         // États des filtres
         const activeFilters = {{
@@ -720,63 +841,30 @@ class TreeGenerator:
             other: true
         }};
 
-        let isolatedNode = null;  // Nœud isolé
-        let currentFilePath = null;  // Chemin du fichier actuel dans la modal
-
-        treeLayout(root);
-
-        // Clic sur le fond pour désactiver la surbrillance
-        svg.on("click", function(event) {{
-            if (event.target === this) {{
-                clearHighlight();
-            }}
-        }});
-
-        // Désactiver la surbrillance uniquement
-        function clearHighlight() {{
-            g.selectAll("circle").classed("highlight", false);
-            g.selectAll(".node").style("opacity", 1);
-            g.selectAll(".link").style("opacity", 0.4);
-        }}
-
-        // Couleurs selon le type de fichier
-        function getColor(node) {{
-            if (node.data.type === 'folder') return '#667eea';
-            const ext = node.data.ext || '';
-            if (['.pdf', '.doc', '.docx'].includes(ext)) return '#e74c3c';
-            if (['.xls', '.xlsx'].includes(ext)) return '#27ae60';
-            if (['.msg', '.eml'].includes(ext)) return '#3498db';
-            if (['.jpg', '.png', '.gif'].includes(ext)) return '#9b59b6';
-            if (['.zip', '.rar'].includes(ext)) return '#f39c12';
-            if (['.dwg', '.dxf'].includes(ext)) return '#e67e22';
-            return '#95a5a6';
-        }}
-
-        // Créer un groupe pour les liens (dessiné en premier = arrière-plan)
+        // Créer les groupes pour les liens et nœuds
         const linksGroup = g.append("g").attr("class", "links-group");
-        // Créer un groupe pour les nœuds (dessiné en dernier = premier plan)
         const nodesGroup = g.append("g").attr("class", "nodes-group");
 
-        // Dessiner initialement
+        // Dessiner l'arbre initial (tout déplié)
         update(root);
 
+        // Mise à jour de l'arbre
         function update(source) {{
-            // Calculer la nouvelle disposition
             treeLayout(root);
 
-            // Dessiner les liens - HORIZONTAL (dans linksGroup, toujours derrière)
-            const links = linksGroup.selectAll(".link")
-                .data(root.links(), d => `${{d.source.data.path}}-${{d.target.data.path}}`);
+            // Appliquer les filtres après mise à jour
+            applyFiltersToNodes();
 
-            // Supprimer les anciens liens
+            // Liens
+            const links = linksGroup.selectAll(".link")
+                .data(root.links(), d => d.target.data.path);
+
             links.exit().remove();
 
-            // Mettre à jour les liens existants
             links.attr("d", d3.linkHorizontal()
                 .x(d => d.y)
                 .y(d => d.x));
 
-            // Ajouter les nouveaux liens
             links.enter()
                 .append("path")
                 .attr("class", "link")
@@ -784,68 +872,78 @@ class TreeGenerator:
                     .x(d => d.y)
                     .y(d => d.x));
 
-            // Dessiner les noeuds (dans nodesGroup, toujours devant)
+            // Nœuds
             const nodes = nodesGroup.selectAll(".node")
                 .data(root.descendants(), d => d.data.path);
 
-            // Supprimer les anciens nœuds
             nodes.exit().remove();
 
-            // Mettre à jour les nœuds existants
             const nodeUpdate = nodes.attr("transform", d => `translate(${{d.y}},${{d.x}})`);
 
-            // Mettre à jour les cercles existants
             nodeUpdate.select("circle")
-                .attr("r", d => d.data.type === 'folder' ? 6 : 4)
+                .attr("r", d => d.data.type === 'folder' ? 5 : 3)
                 .style("fill", d => getColor(d))
-                .style("stroke", d => d3.rgb(getColor(d)).darker());
+                .style("stroke", d => d3.rgb(getColor(d)).darker(0.8));
 
-            // Mettre à jour les textes existants
             nodeUpdate.select("text")
-                .attr("x", d => d.children || d._children ? -10 : 10)
-                .attr("text-anchor", d => d.children || d._children ? "end" : "start")
-                .text(d => d.data.name.length > 60 ? d.data.name.substring(0, 60) + '...' : d.data.name);
+                .attr("x", d => (d.children || d._children) ? -8 : 8)
+                .attr("text-anchor", d => (d.children || d._children) ? "end" : "start")
+                .text(d => d.data.name.length > 48 ? d.data.name.substring(0, 48) + '...' : d.data.name);
 
-            // Ajouter les nouveaux nœuds
             const nodeEnter = nodes.enter()
                 .append("g")
                 .attr("class", "node")
                 .attr("transform", d => `translate(${{d.y}},${{d.x}})`);
 
             nodeEnter.append("circle")
-                .attr("r", d => d.data.type === 'folder' ? 6 : 4)
+                .attr("r", d => d.data.type === 'folder' ? 5 : 3)
                 .style("fill", d => getColor(d))
-                .style("stroke", d => d3.rgb(getColor(d)).darker())
-                .style("cursor", "pointer")
+                .style("stroke", d => d3.rgb(getColor(d)).darker(0.8))
                 .on("mouseover", showTooltip)
                 .on("mouseout", hideTooltip)
-                .on("click", click);
+                .on("click", click)
+                .on("dblclick", (event) => {{ event.stopPropagation(); event.preventDefault(); }});
 
             nodeEnter.append("text")
                 .attr("dy", "0.31em")
-                .attr("x", d => d.children || d._children ? -10 : 10)
-                .attr("text-anchor", d => d.children || d._children ? "end" : "start")
-                .text(d => d.data.name.length > 60 ? d.data.name.substring(0, 60) + '...' : d.data.name)
-                .style("font-size", "12px")
-                .style("cursor", "pointer")
-                .on("click", click);
+                .attr("x", d => (d.children || d._children) ? -8 : 8)
+                .attr("text-anchor", d => (d.children || d._children) ? "end" : "start")
+                .text(d => d.data.name.length > 48 ? d.data.name.substring(0, 48) + '...' : d.data.name)
+                .on("click", click)
+                .on("dblclick", (event) => {{ event.stopPropagation(); event.preventDefault(); }});
         }}
 
-        // Clic pour afficher détails (fichiers) ou mettre en surbrillance (dossiers)
+        function getColor(node) {{
+            if (node.data.type === 'folder') return '#667eea';
+            const ext = node.data.ext || '';
+            if (['.pdf', '.doc', '.docx', '.odt'].includes(ext)) return '#e74c3c';
+            if (['.xls', '.xlsx', '.csv', '.ods'].includes(ext)) return '#27ae60';
+            if (['.msg', '.eml'].includes(ext)) return '#3498db';
+            if (['.jpg', '.png', '.gif', '.bmp'].includes(ext)) return '#9b59b6';
+            if (['.zip', '.rar', '.7z'].includes(ext)) return '#f39c12';
+            if (['.dwg', '.dxf'].includes(ext)) return '#e67e22';
+            return '#95a5a6';
+        }}
+
         function click(event, d) {{
             event.stopPropagation();
-
             if (d.data.type === 'file') {{
-                // Afficher la modal avec les détails
-                showFileDetails(d);
+                // Ctrl+clic sur fichier : ouvrir directement dans un onglet
+                if (event.ctrlKey || event.metaKey) {{
+                    const fileUrl = 'file:///' + d.data.path.replace(/\\\\/g, '/');
+                    window.open(fileUrl, '_blank');
+                }} else {{
+                    // Clic simple : afficher les détails
+                    showFileDetails(d);
+                }}
             }} else {{
-                // Pour les dossiers : Ctrl+clic pour replier/déplier, clic simple pour surbrillance
+                // INVERSÉ: Ctrl+clic pour déplier/replier, clic simple pour surbrillance
                 if (event.ctrlKey || event.metaKey) {{
                     // Ctrl+clic : toggle expand/collapse
                     if (d.children) {{
                         d._children = d.children;
                         d.children = null;
-                    }} else {{
+                    }} else if (d._children) {{
                         d.children = d._children;
                         d._children = null;
                     }}
@@ -861,12 +959,11 @@ class TreeGenerator:
         function highlightNode(d) {{
             // Réinitialiser le highlight
             g.selectAll("circle").classed("highlight", false);
-            g.selectAll(".node").style("opacity", 0.2);
-            g.selectAll(".link").style("opacity", 0.05);
+            g.selectAll(".node").style("opacity", 0.15); // Très faible opacité
+            g.selectAll(".link").style("opacity", 0.1);
 
             // Trouver tous les descendants
             const descendants = d.descendants();
-            const descendantSet = new Set(descendants);
 
             // Trouver tous les ancêtres
             const ancestors = [];
@@ -879,51 +976,51 @@ class TreeGenerator:
             // Combiner descendants et ancêtres
             const nodesToShow = new Set([...descendants, ...ancestors]);
 
-            // Afficher les nœuds sélectionnés
+            // Afficher les nœuds sélectionnés avec pleine opacité
             g.selectAll(".node")
-                .filter(function(node) {{ return nodesToShow.has(node); }})
+                .filter(node => nodesToShow.has(node))
                 .style("opacity", 1)
                 .selectAll("circle")
                 .classed("highlight", node => node === d);
 
-            // Afficher les liens connectés
+            // Afficher les liens connectés avec bonne opacité
             g.selectAll(".link")
-                .filter(function(link) {{
-                    return nodesToShow.has(link.source) && nodesToShow.has(link.target);
-                }})
-                .style("opacity", 0.4);
+                .filter(link => nodesToShow.has(link.source) && nodesToShow.has(link.target))
+                .style("opacity", 0.8);
         }}
 
-        // Isoler un nœud
-        function isolateNode(d) {{
-            if (isolatedNode === d) {{
-                // Désisoler
-                isolatedNode = null;
-                g.selectAll(".node").style("opacity", 1);
-                g.selectAll(".link").style("opacity", 1);
-            }} else {{
-                // Isoler ce nœud
-                isolatedNode = d;
-
-                // Masquer tous les autres
-                g.selectAll(".node").style("opacity", 0.1);
-                g.selectAll(".link").style("opacity", 0.1);
-
-                // Afficher le nœud isolé et ses descendants
-                const descendants = d.descendants();
-                const descendantSet = new Set(descendants);
-
-                g.selectAll(".node")
-                    .filter(function(node) {{ return descendantSet.has(node); }})
-                    .style("opacity", 1);
-
-                g.selectAll(".link")
-                    .filter(function(link) {{ return descendantSet.has(link.target); }})
-                    .style("opacity", 1);
+        // Clic sur le fond pour désactiver la surbrillance
+        svg.on("click", function(event) {{
+            if (event.target === this || event.target.tagName === 'svg') {{
+                clearHighlight();
             }}
+        }});
+
+        function clearHighlight() {{
+            g.selectAll("circle").classed("highlight", false);
+            g.selectAll(".node").style("opacity", 1);
+            g.selectAll(".link").style("opacity", 0.7);
         }}
 
-        // Afficher les détails du fichier
+        const tooltip = d3.select("#tooltip");
+
+        function showTooltip(event, d) {{
+            let content = `<strong>${{d.data.name}}</strong><br>`;
+            content += `Type: ${{d.data.type === 'folder' ? 'Dossier' : 'Fichier'}}<br>`;
+            if (d.data.size) content += `Taille: ${{d.data.size}}<br>`;
+            if (d.data.date) content += `Date: ${{d.data.date}}`;
+
+            tooltip
+                .style("opacity", 1)
+                .html(content)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        }}
+
+        function hideTooltip() {{
+            tooltip.style("opacity", 0);
+        }}
+
         function showFileDetails(d) {{
             currentFilePath = d.data.path;
             document.getElementById('modalFileName').textContent = d.data.name;
@@ -941,47 +1038,20 @@ class TreeGenerator:
 
         function openFile() {{
             if (currentFilePath) {{
-                // Ouvrir le fichier dans un nouvel onglet
                 const fileUrl = 'file:///' + currentFilePath.replace(/\\\\/g, '/');
                 window.open(fileUrl, '_blank');
             }}
         }}
 
-        // Tooltip avec date
-        const tooltip = d3.select("#tooltip");
-
-        function showTooltip(event, d) {{
-            let content = `<strong>${{d.data.name}}</strong><br>`;
-            content += `Type: ${{d.data.type === 'folder' ? 'Dossier 📁' : 'Fichier 📄'}}<br>`;
-            if (d.data.size) content += `Taille: ${{d.data.size}}<br>`;
-            if (d.data.date) content += `Date: ${{d.data.date}}`;
-
-            tooltip
-                .style("opacity", 1)
-                .html(content)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 10) + "px");
-        }}
-
-        function hideTooltip() {{
-            tooltip.style("opacity", 0);
-        }}
-
-        // Recherche améliorée
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {{
+        // Recherche avec meilleur contraste
+        document.getElementById('searchInput').addEventListener('input', (e) => {{
             const searchTerm = e.target.value.toLowerCase();
 
-            // Réinitialiser le highlight
             g.selectAll("circle").classed("highlight", false);
             g.selectAll(".node").style("opacity", 1);
-            g.selectAll(".link").style("opacity", 0.4);
+            g.selectAll(".link").style("opacity", 0.7);
 
             if (searchTerm.length > 0) {{
-                // Déplier tous les niveaux pour la recherche
-                expandAll();
-
-                // Trouver les nœuds correspondants
                 const matchingNodes = [];
                 root.descendants().forEach(d => {{
                     if (d.data.name.toLowerCase().includes(searchTerm)) {{
@@ -990,16 +1060,13 @@ class TreeGenerator:
                 }});
 
                 if (matchingNodes.length > 0) {{
-                    // Masquer tout
-                    g.selectAll(".node").style("opacity", 0.1);
-                    g.selectAll(".link").style("opacity", 0.05);
+                    // Réduire l'opacité des non-correspondants
+                    g.selectAll(".node").style("opacity", 0.15);
+                    g.selectAll(".link").style("opacity", 0.1);
 
-                    // Afficher les nœuds correspondants et leurs ancêtres
                     const nodesToShow = new Set();
                     matchingNodes.forEach(d => {{
-                        // Ajouter le nœud lui-même
                         nodesToShow.add(d);
-                        // Ajouter tous ses ancêtres
                         let parent = d.parent;
                         while (parent) {{
                             nodesToShow.add(parent);
@@ -1007,83 +1074,100 @@ class TreeGenerator:
                         }}
                     }});
 
-                    // Afficher les nœuds sélectionnés
+                    // Afficher les correspondants avec pleine opacité
                     g.selectAll(".node")
-                        .filter(function(node) {{ return nodesToShow.has(node); }})
+                        .filter(node => nodesToShow.has(node))
                         .style("opacity", 1)
                         .selectAll("circle")
                         .classed("highlight", d => matchingNodes.includes(d));
 
-                    // Afficher les liens connectés
+                    // Afficher les liens vers les correspondants
                     g.selectAll(".link")
-                        .filter(function(link) {{ return nodesToShow.has(link.target); }})
-                        .style("opacity", 0.4);
+                        .filter(link => nodesToShow.has(link.target))
+                        .style("opacity", 0.8);
                 }}
             }}
         }});
 
-        // Contrôles zoom
+        // Contrôles de zoom - CORRIGÉS pour zoomer au centre du viewport
         function zoomIn() {{
-            // Récupérer la transformation actuelle
-            const currentTransform = d3.zoomTransform(svg.node());
+            const transform = d3.zoomTransform(svg.node());
+            const containerRect = container.node().getBoundingClientRect();
 
-            // Point central du viewport
-            const containerRect = svg.node().getBoundingClientRect();
+            // Centre du viewport visible
             const centerX = containerRect.width / 2;
             const centerY = containerRect.height / 2;
 
-            // Calculer le nouveau scale
-            const newScale = currentTransform.k * 1.3;
+            // Point dans l'espace du graphique correspondant au centre du viewport
+            const pointX = (centerX - transform.x) / transform.k;
+            const pointY = (centerY - transform.y) / transform.k;
 
-            // Calculer la nouvelle translation pour garder le centre fixe
-            const newTranslateX = centerX - (centerX - currentTransform.x) * (newScale / currentTransform.k);
-            const newTranslateY = centerY - (centerY - currentTransform.y) * (newScale / currentTransform.k);
+            const newScale = transform.k * 1.3;
 
-            // Appliquer la transformation
+            // Nouvelles coordonnées pour garder le même point au centre
+            const newX = centerX - pointX * newScale;
+            const newY = centerY - pointY * newScale;
+
             svg.transition()
                 .duration(300)
                 .call(zoom.transform, d3.zoomIdentity
-                    .translate(newTranslateX, newTranslateY)
+                    .translate(newX, newY)
                     .scale(newScale));
         }}
 
         function zoomOut() {{
-            // Récupérer la transformation actuelle
-            const currentTransform = d3.zoomTransform(svg.node());
+            const transform = d3.zoomTransform(svg.node());
+            const containerRect = container.node().getBoundingClientRect();
 
-            // Point central du viewport
-            const containerRect = svg.node().getBoundingClientRect();
+            // Centre du viewport visible
             const centerX = containerRect.width / 2;
             const centerY = containerRect.height / 2;
 
-            // Calculer le nouveau scale
-            const newScale = currentTransform.k * 0.77;
+            // Point dans l'espace du graphique correspondant au centre du viewport
+            const pointX = (centerX - transform.x) / transform.k;
+            const pointY = (centerY - transform.y) / transform.k;
 
-            // Calculer la nouvelle translation pour garder le centre fixe
-            const newTranslateX = centerX - (centerX - currentTransform.x) * (newScale / currentTransform.k);
-            const newTranslateY = centerY - (centerY - currentTransform.y) * (newScale / currentTransform.k);
+            const newScale = transform.k * 0.77;
 
-            // Appliquer la transformation
+            // Nouvelles coordonnées pour garder le même point au centre
+            const newX = centerX - pointX * newScale;
+            const newY = centerY - pointY * newScale;
+
             svg.transition()
                 .duration(300)
                 .call(zoom.transform, d3.zoomIdentity
-                    .translate(newTranslateX, newTranslateY)
+                    .translate(newX, newY)
                     .scale(newScale));
         }}
 
         function resetZoom() {{
-            // Centrer sur tout ce qui est affiché
             fitToScreen();
         }}
 
-        // Expand / Collapse All
+        function fitToScreen() {{
+            const bounds = g.node().getBBox();
+            const containerRect = container.node().getBoundingClientRect();
+
+            const scale = 0.9 / Math.max(bounds.width / containerRect.width, bounds.height / containerRect.height);
+            const translateX = containerRect.width / 2 - scale * (bounds.x + bounds.width / 2);
+            const translateY = containerRect.height / 2 - scale * (bounds.y + bounds.height / 2);
+
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity
+                    .translate(translateX, translateY)
+                    .scale(scale));
+        }}
+
         function expandAll() {{
-            root.descendants().forEach(d => {{
+            // CORRECTION: vraiment tout déplier
+            root.each(d => {{
                 if (d._children) {{
                     d.children = d._children;
                     d._children = null;
                 }}
             }});
+            currentDepthLevel = 999;
             update(root);
         }}
 
@@ -1094,14 +1178,73 @@ class TreeGenerator:
                     d.children = null;
                 }}
             }});
+            currentDepthLevel = 1;
             update(root);
         }}
 
-        // Toggle filtre (clic sur légende)
+        function getMaxDepth() {{
+            let maxDepth = 0;
+            root.each(d => {{
+                if (d.depth > maxDepth) maxDepth = d.depth;
+            }});
+            return maxDepth;
+        }}
+
+        function expandToLevel(level) {{
+            root.descendants().forEach(d => {{
+                if (d.children || d._children) {{
+                    if (d.depth < level) {{
+                        if (d._children) {{
+                            d.children = d._children;
+                            d._children = null;
+                        }}
+                    }} else {{
+                        if (d.children) {{
+                            d._children = d.children;
+                            d.children = null;
+                        }}
+                    }}
+                }}
+            }});
+            currentDepthLevel = level;
+            update(root);
+        }}
+
+        function increaseDepth() {{
+            const maxDepth = getMaxDepth();
+            if (currentDepthLevel <= maxDepth) {{
+                currentDepthLevel++;
+                expandToLevel(currentDepthLevel);
+            }}
+        }}
+
+        function decreaseDepth() {{
+            const maxDepth = getMaxDepth();
+
+            // Si on est au niveau Max (999), passer au niveau réel maximum
+            if (currentDepthLevel >= maxDepth) {{
+                currentDepthLevel = maxDepth;
+            }}
+
+            // Puis décrémenter normalement si > 1
+            if (currentDepthLevel > 1) {{
+                currentDepthLevel--;
+                expandToLevel(currentDepthLevel);
+            }}
+        }}
+
+        function toggleFilters() {{
+            const panel = document.getElementById('filtersPanel');
+            if (panel.style.display === 'none' || panel.style.display === '') {{
+                panel.style.display = 'block';
+            }} else {{
+                panel.style.display = 'none';
+            }}
+        }}
+
         function toggleFilter(filterType, element) {{
             activeFilters[filterType] = !activeFilters[filterType];
 
-            // Mettre à jour l'apparence
             if (activeFilters[filterType]) {{
                 element.classList.add('active');
                 element.classList.remove('inactive');
@@ -1110,19 +1253,10 @@ class TreeGenerator:
                 element.classList.add('inactive');
             }}
 
-            // Appliquer les filtres
-            applyFilters();
+            applyFiltersToNodes();
         }}
 
-        function applyFilters() {{
-            // Déplier tous les niveaux lors du filtrage
-            expandAll();
-
-            // Réinitialiser
-            g.selectAll(".node").style("opacity", 1).style("display", "block");
-            g.selectAll(".link").style("opacity", 0.4).style("display", "block");
-
-            // Filtrer selon les types actifs
+        function applyFiltersToNodes() {{
             const nodesToHide = new Set();
 
             root.descendants().forEach(d => {{
@@ -1132,11 +1266,11 @@ class TreeGenerator:
                     shouldHide = !activeFilters.folder;
                 }} else {{
                     const ext = d.data.ext || '';
-                    if (['.pdf', '.doc', '.docx'].includes(ext)) shouldHide = !activeFilters.doc;
-                    else if (['.xls', '.xlsx'].includes(ext)) shouldHide = !activeFilters.sheet;
+                    if (['.pdf', '.doc', '.docx', '.odt'].includes(ext)) shouldHide = !activeFilters.doc;
+                    else if (['.xls', '.xlsx', '.csv', '.ods'].includes(ext)) shouldHide = !activeFilters.sheet;
                     else if (['.msg', '.eml'].includes(ext)) shouldHide = !activeFilters.email;
-                    else if (['.jpg', '.png', '.gif'].includes(ext)) shouldHide = !activeFilters.image;
-                    else if (['.zip', '.rar'].includes(ext)) shouldHide = !activeFilters.archive;
+                    else if (['.jpg', '.png', '.gif', '.bmp'].includes(ext)) shouldHide = !activeFilters.image;
+                    else if (['.zip', '.rar', '.7z'].includes(ext)) shouldHide = !activeFilters.archive;
                     else if (['.dwg', '.dxf'].includes(ext)) shouldHide = !activeFilters.cad;
                     else shouldHide = !activeFilters.other;
                 }}
@@ -1146,117 +1280,35 @@ class TreeGenerator:
                 }}
             }});
 
-            // Masquer les nœuds filtrés
+            // Appliquer le filtrage visuel
             g.selectAll(".node")
-                .filter(function(node) {{ return nodesToHide.has(node); }})
-                .style("display", "none");
+                .style("display", function(d) {{
+                    return nodesToHide.has(d) ? "none" : "block";
+                }});
 
-            // Masquer les liens vers les nœuds cachés
             g.selectAll(".link")
-                .filter(function(link) {{ return nodesToHide.has(link.target); }})
-                .style("display", "none");
+                .style("display", function(d) {{
+                    return nodesToHide.has(d.target) ? "none" : "block";
+                }});
         }}
 
-        // Variable pour suivre le niveau de dépliage actuel
-        let currentDepthLevel = 100; // Par défaut tout déplié
-
-        // Calculer la profondeur maximale de l'arbre
-        function getMaxDepth() {{
-            let maxDepth = 0;
-            root.descendants().forEach(d => {{
-                if (d.depth > maxDepth) maxDepth = d.depth;
-            }});
-            return maxDepth;
-        }}
-
-        // Déplier jusqu'à un niveau
-        function expandToLevel(maxLevel) {{
-            currentDepthLevel = maxLevel;
-            root.descendants().forEach(d => {{
-                if (d.depth < maxLevel) {{
-                    if (d._children) {{
-                        d.children = d._children;
-                        d._children = null;
-                    }}
-                }} else {{
-                    if (d.children) {{
-                        d._children = d.children;
-                        d.children = null;
-                    }}
-                }}
-            }});
-            update(root);
-        }}
-
-        // Augmenter le niveau de dépliage
-        function increaseDepth() {{
-            const maxDepth = getMaxDepth();
-            if (currentDepthLevel < maxDepth + 1) {{
-                currentDepthLevel++;
-                expandToLevel(currentDepthLevel);
-            }}
-        }}
-
-        // Diminuer le niveau de dépliage
-        function decreaseDepth() {{
-            if (currentDepthLevel > 1) {{
-                currentDepthLevel--;
-                expandToLevel(currentDepthLevel);
-            }}
-        }}
-
-        // Réinitialiser la vue complètement
         function resetView() {{
-            // Réinitialiser les états
-            isolatedNode = null;
-
-            // Désactiver surbrillance
-            clearHighlight();
-
-            // Vider la recherche
             document.getElementById('searchInput').value = '';
+            g.selectAll("circle").classed("highlight", false);
+            g.selectAll(".node").style("opacity", 1).style("display", "block");
+            g.selectAll(".link").style("opacity", 0.7).style("display", "block");
 
             // Réactiver tous les filtres
             Object.keys(activeFilters).forEach(key => {{
                 activeFilters[key] = true;
             }});
-
-            // Mettre à jour l'UI des filtres
             document.querySelectorAll('.filter-item').forEach(item => {{
                 item.classList.add('active');
                 item.classList.remove('inactive');
             }});
 
-            // Réafficher tous les nœuds
-            g.selectAll(".node").style("display", "block");
-            g.selectAll(".link").style("display", "block");
-
-            // Tout déplier
             expandAll();
-
-            // Centrer et ajuster le zoom pour voir toute l'arborescence
-            fitToScreen();
-        }}
-
-        // Ajuster la vue pour voir toute l'arborescence
-        function fitToScreen() {{
-            const bounds = g.node().getBBox();
-            const parent = svg.node().getBoundingClientRect();
-            const fullWidth = bounds.width;
-            const fullHeight = bounds.height;
-            const midX = bounds.x + fullWidth / 2;
-            const midY = bounds.y + fullHeight / 2;
-
-            const scale = 0.8 / Math.max(fullWidth / parent.width, fullHeight / parent.height);
-            const translate = [parent.width / 2 - scale * midX, parent.height / 2 - scale * midY];
-
-            svg.transition()
-                .duration(750)
-                .call(zoom.transform, d3.zoomIdentity
-                    .translate(translate[0], translate[1])
-                    .scale(scale));
-
-            currentScale = scale;
+            setTimeout(fitToScreen, 100);
         }}
 
         // Export HTML
@@ -1271,15 +1323,10 @@ class TreeGenerator:
             URL.revokeObjectURL(url);
         }}
 
-        // Toggle panneau filtres
-        function toggleFilters() {{
-            const panel = document.getElementById('filtersPanel');
-            if (panel.style.display === 'none' || panel.style.display === '') {{
-                panel.style.display = 'block';
-            }} else {{
-                panel.style.display = 'none';
-            }}
-        }}
+        // Initialiser la vue (tout déplié)
+        setTimeout(() => {{
+            fitToScreen();
+        }}, 100);
     </script>
 </body>
 </html>"""
